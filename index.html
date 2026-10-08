@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a1022">
+  <meta name="description" content="CipherQuest: aprenda criptografia resolvendo desafios. Projeto educacional da Turma 2001.">
+  <title>CipherQuest — Transforme. Decifre. Descubra.</title>
+  <link rel="icon" type="image/png" href="/assets/images/cipherquest-logo.png">
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="module" src="/js/app.js"></script>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="site-header">
+    <button class="brand" type="button" data-go="home" aria-label="CipherQuest, voltar ao início"><img class="brand-logo" src="/assets/images/cipherquest-logo.png" alt=""><span>CIPHERQUEST</span></button>
+    <span class="header-tag">UM PROJETO DA <strong>TURMA 2001</strong></span>
+  </header>
+  <main id="main">
+    <section id="home" class="screen home-screen" aria-labelledby="home-title">
+      <div class="home-copy">
+        <h1 id="home-title">CIPHER<span>QUEST</span><span class="title-period">.</span></h1>
+        <p class="home-description">Decifre mensagens, encontre padrões e transforme códigos em respostas.</p>
+        <div class="home-actions">
+          <button class="button button-primary" type="button" data-go="rooms">JOGAR <span aria-hidden="true">↗</span></button>
+          <button class="button button-secondary" type="button" data-go="training">TREINO <span aria-hidden="true">↗</span></button>
+        </div>
+        <nav class="text-nav" aria-label="Informações do jogo">
+          <button type="button" data-go="how">COMO JOGAR</button><button type="button" data-go="about">SOBRE O JOGO</button><button type="button" data-go="credits">CRÉDITOS</button>
+        </nav>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-orbit hero-orbit-one"></div><div class="hero-orbit hero-orbit-two"></div>
+        <div class="signal-card"><div class="signal-top"><span id="hero-transmission">TRANSMISSÃO / 001</span><span class="signal-bars">▂ ▅ ▇</span></div><div class="signal-label">MENSAGEM ORIGINAL</div><div class="signal-word" id="hero-original">ESCOLA</div><div class="signal-line"><span class="signal-arrow">↓</span><span id="hero-shift">DESLOCAMENTO +3</span></div><div class="signal-label">MENSAGEM TRANSFORMADA</div><div class="signal-word signal-result" id="hero-result">******</div><div class="signal-footer"><span>PADRÃO DETECTADO</span><span>● ● ●</span></div></div>
+        <div class="floating-code floating-code-a">0100 / A–Z</div><div class="floating-code floating-code-b" id="hero-mapping">E → H &nbsp; S → V</div>
+      </div>
+    </section>
+
+    <section id="how" class="screen content-screen" hidden aria-labelledby="how-title">
+      <div class="section-heading"><span class="eyebrow">MANUAL DE CAMPO / 01</span><h2 id="how-title">COMO JOGAR</h2><p>Observe a regra, transforme a mensagem e entenda o caminho de cada letra.</p></div>
+      <div class="steps-grid"><article class="info-card"><span class="step-number">01</span><h3>Leia a missão</h3><p>Você receberá uma palavra ou frase e um método de transformação.</p></article><article class="info-card"><span class="step-number">02</span><h3>Encontre o padrão</h3><p>Criptografe o texto original ou desvende a mensagem codificada.</p></article><article class="info-card"><span class="step-number">03</span><h3>Aprenda com o resultado</h3><p>Veja a transformação letra por letra e avance para o próximo desafio.</p></article></div>
+      <div class="note-panel"><strong>PRECISA DE AJUDA?</strong><p>Nas primeiras fases, o alfabeto fica visível. Você também pode pedir uma pista, com desconto de 30 pontos na fase.</p></div>
+      <div class="screen-actions"><button class="button button-primary" type="button" data-go="rooms">JOGAR ↗</button><button class="button button-secondary" type="button" data-go="training">FAZER TREINO</button><button class="button button-ghost" type="button" data-go="home">VOLTAR</button></div>
+    </section>
+
+    <section id="training" class="screen content-screen intro-screen" hidden aria-labelledby="training-title">
+      <span class="eyebrow">PRÁTICA OPCIONAL</span><h2 id="training-title">Treino rápido<span class="accent">.</span></h2>
+      <p>Quatro desafios para testar as regras no seu ritmo. O treino é separado das salas e não altera a pontuação da disputa.</p>
+      <div class="steps-grid training-grid"><article class="info-card"><span class="step-number">01 / CÉSAR</span><h3>Desloque letras</h3><p>Avance ou volte no alfabeto. A mesma regra transforma cada letra da mensagem.</p></article><article class="info-card"><span class="step-number">02 / SUBSTITUIÇÃO</span><h3>Troque por pares</h3><p>Cada letra corresponde sempre a outra letra em um alfabeto de substituição. Use o mapa visual para comparar.</p></article><article class="info-card"><span class="step-number">03 / CONCEITO</span><h3>Cifra ou codificação?</h3><p>César e substituição tentam ocultar o texto. Binário, hexadecimal e Base64 representam dados em outro formato; sozinhos, não são criptografia.</p></article></div>
+      <div class="screen-actions"><button id="start-training" class="button button-primary" type="button">COMEÇAR TREINO ↗</button><button class="button button-ghost" type="button" data-go="home">VOLTAR</button></div>
+    </section>
+
+    <section id="game" class="screen game-screen" hidden aria-labelledby="game-title">
+      <div class="game-top"><div><span class="eyebrow" id="level-label">NÍVEL 01 / INICIANTE</span><h2 id="game-title">Central de desafios<span class="accent">.</span></h2></div><button class="button button-ghost small" type="button" data-go="home">SAIR</button></div>
+      <div class="stats-row"><div><span>FASE</span><strong id="stage-stat">01 / 20</strong></div><div><span>PONTOS</span><strong id="score-stat">0</strong></div><div><span>COMBO</span><strong id="combo-stat">x1</strong></div><div><span>TENTATIVAS</span><strong id="attempt-stat">0</strong></div></div>
+      <div id="game-standings" class="game-standings" hidden aria-live="polite"><span id="game-timer"></span><span id="game-team-one"></span><span id="game-team-two"></span></div>
+      <div class="progress-track" role="progressbar" aria-label="Progresso da campanha" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0"><div id="progress-fill"></div></div>
+      <div class="game-layout"><article class="challenge-card"><div class="challenge-card-top"><span class="card-kicker">MISSÃO ATUAL</span><span id="mission-number">FASE 01</span></div><div class="mission-badge" id="mission-badge">CRIPTOGRAFAR</div><p class="field-label">MÉTODO</p><h3 id="method-name">Cifra de César +3</h3><p class="field-label" id="source-label">PALAVRA ORIGINAL</p><div class="source-text" id="source-text">BRUNO</div><form id="answer-form"><label for="answer-input" id="answer-label">Digite a mensagem criptografada</label><div class="input-row"><input id="answer-input" name="answer" type="text" maxlength="100" autocomplete="off" autocapitalize="characters" spellcheck="false" required aria-describedby="answer-feedback"><button class="button button-primary" id="submit-button" type="submit">CRIPTOGRAFAR ↗</button></div></form><p id="answer-feedback" class="answer-feedback" role="status" aria-live="polite"></p><div class="challenge-actions"><button id="hint-button" class="subtle-button" type="button">◇ USAR PISTA <span>−30 PTS</span></button><button id="alphabet-button" class="subtle-button" type="button" aria-expanded="false">A–Z VER ALFABETO</button></div><div id="hint-panel" class="hint-panel" hidden></div><div id="alphabet-panel" class="alphabet-panel" hidden></div></article><aside class="side-panel"><div class="side-icon">⌘</div><span class="card-kicker">DICA DE ANALISTA</span><h3>Leia a regra.<br>Teste uma letra.</h3><p>Em cada nível, o deslocamento pode ser +1, +2, +3 ou −1. Observe a direção antes de transformar cada letra.</p><div class="side-separator"></div><span class="card-kicker">PROGRESSÃO</span><ol class="level-list" id="level-list"><li>INICIANTE</li><li>ANALISTA</li><li>CRIPTÓGRAFO</li><li>ESPECIALISTA</li><li>MESTRE</li></ol></aside></div>
+      <div id="success-panel" class="success-panel" hidden><div class="success-heading"><span class="success-check">✓</span><div><span class="eyebrow">MISSÃO CUMPRIDA</span><h3 id="success-title">Criptografia concluída</h3></div><strong id="earned-points">+100 PTS</strong></div><p id="explanation-text"></p><div class="transformation"><div><span>ORIGINAL</span><strong id="original-result"></strong></div><span class="transform-arrow">→</span><div><span>RESULTADO</span><strong id="encrypted-result"></strong></div></div><div id="letter-mapping" class="letter-mapping" aria-label="Transformação letra por letra"></div><button id="continue-button" class="button button-primary" type="button">CONTINUAR ↗</button></div>
+    </section>
+
+    <section id="result" class="screen content-screen result-screen" hidden aria-labelledby="result-title"><span class="eyebrow">RELATÓRIO FINAL</span><h2 id="result-title">Missão concluída<span class="accent">.</span></h2><p id="result-subtitle">Você descobriu os padrões e concluiu a jornada.</p><div class="result-grid"><div><span>PONTOS</span><strong id="result-score">0</strong></div><div><span>ACERTOS</span><strong id="result-correct">0 / 20</strong></div><div><span>PRECISÃO</span><strong id="result-accuracy">0%</strong></div><div><span>MAIOR SEQUÊNCIA</span><strong id="result-combo">0</strong></div><div><span>ERROS</span><strong id="result-errors">0</strong></div></div><div id="room-result" class="note-panel" hidden></div><div class="screen-actions"><button id="play-again" class="button button-primary" type="button">NOVA SALA ↗</button><button class="button button-ghost" type="button" data-go="home">VOLTAR AO MENU</button></div></section>
+
+    <section id="rooms" class="screen content-screen rooms-screen" hidden aria-labelledby="rooms-title"><div class="section-heading"><span class="eyebrow">DESAFIO ENTRE EQUIPES</span><h2 id="rooms-title">Mesas de jogo<span class="accent">.</span></h2><p>Cada sala começa quando as duas mesas estiverem completas. Os jogadores da mesma sala recebem os mesmos desafios; outras salas recebem desafios diferentes.</p></div><div id="room-forms" class="room-forms"><form id="create-room-form" class="info-card"><span class="step-number">CRIAR SALA</span><label for="create-name">Seu nome</label><input id="create-name" maxlength="24" required placeholder="Como quer aparecer?"><label for="room-capacity">Vagas por mesa</label><select id="room-capacity"><option value="2">2 jogadores</option><option value="3">3 jogadores</option><option value="4" selected>4 jogadores</option><option value="5">5 jogadores</option><option value="6">6 jogadores</option></select><button class="button button-primary" type="submit">CRIAR SALA ↗</button></form><form id="join-room-form" class="info-card"><span class="step-number">ENTRAR EM SALA</span><label for="join-name">Seu nome</label><input id="join-name" maxlength="24" required placeholder="Como quer aparecer?"><label for="join-code">Código da sala</label><input id="join-code" minlength="4" maxlength="4" required placeholder="EX: A7K2" autocapitalize="characters"><label for="join-team">Sua mesa</label><select id="join-team"><option value="1">Mesa 01</option><option value="2">Mesa 02</option></select><button class="button button-secondary" type="submit">ENTRAR ↗</button></form></div><div id="lobby" class="lobby" hidden><div class="lobby-head"><div><span class="eyebrow">SALA DE JOGO</span><h3>Código <span id="lobby-code"></span></h3></div><button id="copy-code" class="button button-secondary small" type="button">COPIAR CÓDIGO</button></div><p id="lobby-status" role="status"></p><p id="room-timer" class="eyebrow" hidden></p><div class="share-panel"><div><label for="share-link">LINK PARA ENTRAR</label><div class="share-controls"><input id="share-link" readonly><button id="copy-link" class="button button-secondary small" type="button">COPIAR LINK</button></div></div><div id="room-qr" class="room-qr" aria-label="Código QR para entrar na sala"></div></div><div class="tables-grid"><div class="team-card"><span>MESA 01</span><ul id="team-one"></ul></div><div class="team-card"><span>MESA 02</span><ul id="team-two"></ul></div></div><div class="room-controls"><button id="leave-room" class="button button-ghost" type="button" hidden>SAIR DA SALA</button><button id="delete-room" class="button button-danger" type="button" hidden>EXCLUIR SALA</button></div><button id="resume-room" class="button button-secondary" type="button" hidden>VOLTAR À PARTIDA ↗</button></div><p id="room-error" class="answer-feedback" role="alert"></p><div class="screen-actions"><button class="button button-ghost" type="button" data-go="home">VOLTAR</button></div></section>
+
+    <dialog id="delete-room-dialog" class="confirm-dialog" aria-labelledby="delete-room-title" aria-describedby="delete-room-description">
+      <span class="eyebrow">CONFIRMAR AÇÃO</span>
+      <h2 id="delete-room-title">Excluir sala?</h2>
+      <p id="delete-room-description">A sala será encerrada. Todos os participantes terão de entrar em outra sala.</p>
+      <div class="screen-actions">
+        <button id="cancel-delete-room" class="button button-ghost" type="button">CANCELAR</button>
+        <button id="confirm-delete-room" class="button button-danger" type="button">EXCLUIR SALA</button>
+      </div>
+    </dialog>
+    <section id="about" class="screen content-screen" hidden aria-labelledby="about-title"><div class="section-heading"><span class="eyebrow">O PROJETO</span><h2 id="about-title">SOBRE O CIPHERQUEST</h2></div><div class="about-layout"><div class="about-primary"><p>CipherQuest é um projeto educacional desenvolvido pela <strong>Turma 2001</strong> para apresentar criptografia, lógica e transformação de informações por meio de uma experiência interativa.</p><p>O jogador criptografa e descriptografa mensagens, observa padrões e aprende como cada método funciona na prática. O projeto une tecnologia, educação e jogos para os alunos da escola.</p></div><div class="note-panel"><strong>CRIPTOGRAFIA ≠ CODIFICAÇÃO</strong><p>Uma cifra usa uma regra e, em geral, uma chave para ocultar uma mensagem. Binário, hexadecimal e Base64 representam dados em outros formatos; por si só, não protegem o conteúdo.</p></div></div><div class="screen-actions"><button class="button button-ghost" type="button" data-go="home">VOLTAR</button></div></section>
+
+    <section id="credits" class="screen credits-screen" hidden aria-labelledby="credits-title"><span class="eyebrow">QUEM FEZ ACONTECER</span><img class="credits-logo" src="/assets/images/cipherquest-logo.png" alt=""><h2 id="credits-title">CIPHERQUEST</h2><p>Desenvolvido pela</p><strong class="credits-class">TURMA 2001</strong><div class="credits-block"><h3>DESENVOLVIMENTO</h3><p>Desenvolvedor Geral</p><p class="credit-name" data-credit-role="desenvolvedor-geral">Bruno Q.</p></div><div class="credits-block"><h3>APOIADORES</h3><p>Apoiadores</p><ul class="credits-list" data-credit-role="apoiadores"><li>Alexsander S.</li><li>Ana B.</li><li>geovanna O.</li><li>Carlos E.</li><li>david K.</li><li>davi N.</li><li>nathan S.</li><li>natan N.</li><li>Maisa A.</li><li>Rhuan C.</li><li>Sheyla C.</li><li>Vitor M.</li><li>Thalya</li><li>Jaqueline B.</li><li>Isabella</li><li>Miguel G.</li><li>Theo</li><li>Jamily M.</li><li>Joao G.</li><li>nicole</li></ul></div><p class="credits-footer">Projeto educacional — Turma 2001</p><button class="button button-ghost" type="button" data-go="home">VOLTAR</button></section>
+  </main>
+</body>
+</html>

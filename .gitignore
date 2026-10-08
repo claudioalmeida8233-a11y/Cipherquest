@@ -1,0 +1,5 @@
+server/data/*.json
+server/data/*.tmp
+.env
+.env.*
+node_modules/

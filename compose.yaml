@@ -1,0 +1,12 @@
+services:
+  cipherquest:
+    build: .
+    container_name: cipherquest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      CIPHERQUEST_DATA_FILE: /app/server/data/rooms.json
+    volumes:
+      - ./server/data:/app/server/data
