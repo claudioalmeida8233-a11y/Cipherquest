@@ -18,6 +18,17 @@ function startGame(room) {
   renderStandings(room);
 }
 
+function startRoomWithCountdown(room) {
+  const status = $('lobby-status');
+  let count = 3;
+  status.textContent = `Sala completa! O desafio começa em ${count}…`;
+  const timer = setInterval(() => {
+    count -= 1;
+    if (count > 0) status.textContent = `Sala completa! O desafio começa em ${count}…`;
+    else { clearInterval(timer); startGame(room); }
+  }, 700);
+}
+
 function startTraining() {
   game = createGame(Date.now(), createTraining());
   gameMode = 'training';
@@ -33,8 +44,13 @@ function renderStandings(room) {
   if (panel.hidden) return;
   const team = number => room.players.filter(player => player.team === number);
   const completed = number => team(number).filter(player => player.finished).length;
+  const mine = room.players.find(player => player.name === (room.viewerName ?? ''));
+  const sessionTeam = room.players.find(player => player.name === sessionStorage.getItem('cipherquest-player-name'))?.team;
+  $('game-my-team').textContent = sessionTeam ? `VOCÊ: MESA 0${sessionTeam}` : '';
   $('game-team-one').textContent = `MESA 01: ${completed(1)} / ${room.capacity} concluíram`;
   $('game-team-two').textContent = `MESA 02: ${completed(2)} / ${room.capacity} concluíram`;
+  const ahead = completed(1) === completed(2) ? 'Disputa equilibrada.' : `Mesa 0${completed(1) > completed(2) ? 1 : 2} está na frente.`;
+  $('game-broadcast').textContent = ahead;
   if (room.startedAt) {
     const seconds = Math.max(0, Math.floor((Date.now() - room.startedAt) / 1000));
     $('game-timer').textContent = `TEMPO ${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
@@ -117,7 +133,7 @@ $('resume-room').addEventListener('click', () => {
 
 initRooms({
   onStart(room) {
-    if (gameMode !== 'room' || !game || game.seed !== room.seed || game.stage !== room.game?.stage) startGame(room);
+    if (gameMode !== 'room' || !game || game.seed !== room.seed || game.stage !== room.game?.stage) startRoomWithCountdown(room);
     else renderStandings(room);
   },
   onUpdate(room) { showRoomResult(room); renderStandings(room); },

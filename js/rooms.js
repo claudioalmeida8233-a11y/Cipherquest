@@ -60,7 +60,9 @@ function renderLobby(room) {
   const missing = Number.isInteger(room.remaining) ? room.remaining : room.capacity * 2 - room.players.length;
   const role = room.viewerRole === undefined ? session.role ?? null : room.viewerRole;
   $('lobby-status').textContent = room.status === 'lobby'
-    ? `Aguardando ${missing} ${missing === 1 ? 'jogador' : 'jogadores'} nesta sala. A partida começa automaticamente quando as duas mesas estiverem completas.`
+    ? missing === room.capacity * 2 - 1
+      ? 'Sala criada! Compartilhe o código com seu grupo.'
+      : `Aguardando ${missing} ${missing === 1 ? 'jogador' : 'jogadores'} nesta sala. A partida começa automaticamente quando as duas mesas estiverem completas.`
     : room.winner ? `Mesa 0${room.winner} venceu a disputa!` : 'Partida em andamento.';
   $('room-timer').hidden = room.status === 'lobby';
   if (room.startedAt) {
@@ -130,6 +132,7 @@ async function refresh() {
 
 function setSession(data, name) {
   session = { ...data, name };
+  sessionStorage.setItem('cipherquest-player-name', name);
   sessionStorage.setItem('cipherquest-room', JSON.stringify(session));
   started = false;
   error('');
@@ -241,6 +244,7 @@ export function clearRoom() {
   clearInterval(polling);
   polling = null;
   sessionStorage.removeItem('cipherquest-room');
+  sessionStorage.removeItem('cipherquest-player-name');
   $('room-forms').hidden = false;
   $('lobby').hidden = true;
   $('leave-room').hidden = true;
