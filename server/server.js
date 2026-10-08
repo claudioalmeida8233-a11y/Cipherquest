@@ -64,7 +64,11 @@ async function handler(req, res, store) {
     const info = await stat(target);
     if (!info.isFile()) throw new Error('Arquivo não encontrado.');
     const content = await readFile(target);
-    res.writeHead(200, { 'Content-Type': types[path.extname(target)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff' });
+    res.writeHead(200, {
+      'Content-Type': types[path.extname(target)] || 'application/octet-stream',
+      'Cache-Control': 'no-store, max-age=0',
+      'X-Content-Type-Options': 'nosniff'
+    });
     res.end(req.method === 'HEAD' ? undefined : content);
   } catch { send(res, 404, { error: 'Arquivo não encontrado.' }); }
 }
