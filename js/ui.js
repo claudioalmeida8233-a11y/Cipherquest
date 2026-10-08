@@ -36,6 +36,15 @@ export function renderGame(game, { training = false } = {}) {
   $('combo-stat').textContent = `x${comboMultiplier(game.streak)}`;
   $('attempt-stat').textContent = String(game.attempts);
   $('progress-fill').style.width = `${((game.stage - 1) / total) * 100}%`;
+  const timeline = $('stage-timeline');
+  timeline.hidden = training;
+  timeline.replaceChildren();
+  if (!training) for (let i = 1; i <= total; i += 1) {
+    const step = document.createElement('span');
+    step.textContent = i;
+    step.className = i < game.stage ? 'done' : i === game.stage ? 'current' : '';
+    timeline.append(step);
+  }
   document.querySelector('.progress-track').setAttribute('aria-valuemax', String(total));
   document.querySelector('.progress-track').setAttribute('aria-valuenow', String(game.stage - 1));
   $('mission-number').textContent = `FASE ${String(game.stage).padStart(2, '0')}`;

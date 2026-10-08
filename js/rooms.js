@@ -107,6 +107,8 @@ async function refresh() {
   const currentSession = session;
   try {
     const room = await request(`/api/rooms/${currentSession.code}`, 'GET', undefined, currentSession.token);
+    document.body.classList.remove('connection-offline');
+    $('connection-status').textContent = 'ONLINE';
     if (session !== currentSession) return;
     if (!room.viewerRole) {
       clearRoom();
@@ -126,7 +128,7 @@ async function refresh() {
       clearRoom();
       onExit();
       error('Esta sala foi excluída. Você pode entrar em outra sala.');
-    } else error(err.message);
+    } else { document.body.classList.add('connection-offline'); $('connection-status').textContent = 'RECONECTANDO'; error('Conexão instável. Tentando reconectar automaticamente…'); }
   }
 }
 

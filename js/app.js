@@ -12,6 +12,7 @@ function startGame(room) {
   game = room.game ?? createGame(room.seed, room.campaign);
   gameMode = 'room';
   $('room-result').hidden = true;
+  $('team-result').hidden = true;
   $('result-subtitle').textContent = 'Você descobriu os padrões e concluiu a jornada.';
   $('play-again').textContent = 'NOVA SALA ↗';
   renderGame(game);
@@ -33,6 +34,7 @@ function startTraining() {
   game = createGame(Date.now(), createTraining());
   gameMode = 'training';
   $('room-result').hidden = true;
+  $('team-result').hidden = true;
   $('result-subtitle').textContent = 'Você concluiu o treino e está pronto para disputar uma sala.';
   $('play-again').textContent = 'TREINAR NOVAMENTE ↗';
   renderGame(game, { training: true });
@@ -66,6 +68,11 @@ function showRoomResult(room) {
     ? `A primeira mesa com todos os participantes concluídos venceu a rodada. Mesa 01: ${room.players.filter(p => p.team === 1 && p.finished).length}/${room.capacity}; Mesa 02: ${room.players.filter(p => p.team === 2 && p.finished).length}/${room.capacity}.`
     : 'Sua pontuação foi enviada. A disputa termina quando todos de uma mesa concluírem.';
   panel.append(title, detail);
+  const teamResult = $('team-result');
+  if (teamResult) {
+    teamResult.hidden = false;
+    teamResult.textContent = `MESA 01 · ${room.players.filter(p => p.team === 1 && p.finished).length}/${room.capacity} concluíram  •  MESA 02 · ${room.players.filter(p => p.team === 2 && p.finished).length}/${room.capacity} concluíram`;
+  }
 }
 
 document.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => {
@@ -144,4 +151,29 @@ if (/^[2-9A-HJ-NP-Z]{4}$/i.test(new URL(window.location.href).searchParams.get('
   showScreen('rooms');
 }
 
+function startBootSequence() {
+  const boot = $('boot-sequence');
+  if (!boot) return;
+  const message = $('boot-message');
+  const detail = $('boot-detail');
+  const messages = ['INICIALIZANDO TRANSMISSÃO', 'CHAVE DETECTADA', 'PADRÃO ENCONTRADO', 'SINCRONIZANDO CIPHERQUEST', 'SISTEMA ONLINE'];
+  const details = ['CHAVE: CQ-2001 / CANAL SEGURO', 'ANALISANDO 26 SÍMBOLOS / OK', 'ROTAS DE TRANSMISSÃO / OK', 'EQUIPES AGUARDANDO / ONLINE', 'CIPHERQUEST ONLINE'];
+  const code = document.querySelector('.boot-code');
+  for (let i = 0; i < 18; i += 1) {
+    const particle = document.createElement('i');
+    particle.className = 'boot-particle';
+    particle.style.setProperty('--x', `${Math.random() * 100}%`);
+    particle.style.setProperty('--y', `${Math.random() * 100}%`);
+    particle.style.setProperty('--delay', `${Math.random() * 2}s`);
+    boot.append(particle);
+  }
+  let index = 0;
+  const interval = setInterval(() => { index += 1; if (message) message.textContent = messages[Math.min(index, messages.length - 1)]; if (detail) detail.textContent = details[Math.min(index, details.length - 1)]; }, 720);
+  const glitch = setInterval(() => { boot.classList.add('glitching'); window.setTimeout(() => boot.classList.remove('glitching'), 180); }, 1650);
+  const close = () => { clearInterval(interval); clearInterval(glitch); boot.classList.add('flash'); window.setTimeout(() => boot.classList.add('is-done'), 260); window.setTimeout(() => boot.remove(), 1200); };
+  $('skip-boot')?.addEventListener('click', close);
+  window.setTimeout(close, 4200);
+}
+
+startBootSequence();
 startHeroAnimation();
