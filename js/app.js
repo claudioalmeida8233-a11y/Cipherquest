@@ -63,7 +63,7 @@ function showRoomResult(room) {
   panel.replaceChildren();
   const title = document.createElement('strong'); title.textContent = room.winner ? `MESA 0${room.winner} VENCEU` : 'AGUARDANDO SUA MESA';
   const detail = document.createElement('p'); detail.textContent = room.winner
-    ? 'A primeira mesa com todos os participantes concluídos venceu a rodada.'
+    ? `A primeira mesa com todos os participantes concluídos venceu a rodada. Mesa 01: ${room.players.filter(p => p.team === 1 && p.finished).length}/${room.capacity}; Mesa 02: ${room.players.filter(p => p.team === 2 && p.finished).length}/${room.capacity}.`
     : 'Sua pontuação foi enviada. A disputa termina quando todos de uma mesa concluírem.';
   panel.append(title, detail);
 }
