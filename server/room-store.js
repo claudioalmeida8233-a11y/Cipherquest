@@ -183,7 +183,7 @@ export class RoomStore {
       : room.players.some(player => player.token === token) ? 'player' : null;
     return { code: room.code, capacity: room.capacity, remaining: room.capacity * 2 - room.players.length,
       status: room.status, seed: room.seed, campaign: room.campaign, winner: room.winner, viewerRole,
-      startedAt: room.startedAt ?? null, game: viewer?.game ?? null,
+      startedAt: room.startedAt ?? null, timeLimitSeconds: 300, game: viewer?.game ?? null,
       players: room.players.map(({ name, team, finished, score, game }) => ({ name, team, finished, score,
         stage: game ? Math.min(game.stage, game.challenges.length) : 0 })) };
   }

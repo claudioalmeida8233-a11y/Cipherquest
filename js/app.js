@@ -54,8 +54,10 @@ function renderStandings(room) {
   const ahead = completed(1) === completed(2) ? 'Disputa equilibrada.' : `Mesa 0${completed(1) > completed(2) ? 1 : 2} está na frente.`;
   $('game-broadcast').textContent = ahead;
   if (room.startedAt) {
-    const seconds = Math.max(0, Math.floor((Date.now() - room.startedAt) / 1000));
-    $('game-timer').textContent = `TEMPO ${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+    const elapsed = Math.floor((Date.now() - room.startedAt) / 1000);
+    const remaining = Math.max(0, (room.timeLimitSeconds ?? 300) - elapsed);
+    $('game-timer').textContent = `TEMPO RESTANTE ${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`;
+    $('game-timer').classList.toggle('timer-warning', remaining <= 60);
   }
 }
 

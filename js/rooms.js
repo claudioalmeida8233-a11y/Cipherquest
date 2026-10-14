@@ -66,8 +66,9 @@ function renderLobby(room) {
     : room.winner ? `Mesa 0${room.winner} venceu a disputa!` : 'Partida em andamento.';
   $('room-timer').hidden = room.status === 'lobby';
   if (room.startedAt) {
-    const seconds = Math.max(0, Math.floor((Date.now() - room.startedAt) / 1000));
-    $('room-timer').textContent = `TEMPO DE SALA ${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+    const elapsed = Math.floor((Date.now() - room.startedAt) / 1000);
+    const remaining = Math.max(0, (room.timeLimitSeconds ?? 300) - elapsed);
+    $('room-timer').textContent = `LIMITE COMPETITIVO ${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`;
   }
   renderTeam('team-one', room.players.filter(player => player.team === 1), room.capacity, room.status);
   renderTeam('team-two', room.players.filter(player => player.team === 2), room.capacity, room.status);
