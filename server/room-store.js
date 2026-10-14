@@ -96,6 +96,7 @@ export class RoomStore {
   playerForAction(code, token) {
     const room = this.rooms.get(String(code).toUpperCase());
     if (!room || room.status === 'lobby') return { error: 'Partida não iniciada.' };
+    if (room.startedAt && this.now() - room.startedAt >= 300_000) return { error: 'O tempo de 5 minutos terminou.' };
     const player = room.players.find(item => item.token === token);
     if (!player) return { error: 'Participante não encontrado.' };
     player.lastSeen = this.now();
