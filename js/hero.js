@@ -51,7 +51,7 @@ export function startHeroAnimation() {
       revealed += 1;
       resultElement.textContent = maskedReveal(encrypted, revealed, revealTotal);
       if (revealed >= revealTotal) clearInterval(revealTimer);
-    }, 420);
+    }, 650);
   }
 
   showExample();
