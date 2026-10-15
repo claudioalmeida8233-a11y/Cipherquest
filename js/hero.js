@@ -13,7 +13,7 @@ function revealLimit(text) {
   return Math.max(3, Math.ceil(letters / 2));
 }
 
-export function maskedReveal(text, revealedCount, limit = Number.POSITIVE_INFINITY) {
+export function maskedReveal(text, revealedCount, limit = 3) {
   let remaining = Math.min(limit, Math.max(0, Math.floor(revealedCount)));
   return [...text].map(letter => {
     if (letter === ' ') return ' ';
