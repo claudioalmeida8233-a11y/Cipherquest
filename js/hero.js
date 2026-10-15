@@ -13,8 +13,8 @@ function revealLimit(text) {
   return Math.max(3, Math.ceil(letters / 2));
 }
 
-export function maskedReveal(text, revealedCount) {
-  let remaining = Math.min(revealLimit(text), Math.max(0, Math.floor(revealedCount)));
+export function maskedReveal(text, revealedCount, limit = Number.POSITIVE_INFINITY) {
+  let remaining = Math.min(limit, Math.max(0, Math.floor(revealedCount)));
   return [...text].map(letter => {
     if (letter === ' ') return ' ';
     if (remaining > 0) { remaining -= 1; return letter; }
@@ -40,16 +40,16 @@ export function startHeroAnimation() {
     transmissionElement.textContent = `TRANSMISSÃO / ${String(index + 1).padStart(3, '0')}`;
     mappingElement.textContent = `${original[0]} → ${encrypted[0]}   ${original[1]} → ${encrypted[1]}`;
     const revealTotal = revealLimit(encrypted);
-    resultElement.textContent = maskedReveal(encrypted, 0);
+    resultElement.textContent = maskedReveal(encrypted, 0, revealTotal);
     clearInterval(revealTimer);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      resultElement.textContent = maskedReveal(encrypted, revealTotal);
+      resultElement.textContent = maskedReveal(encrypted, revealTotal, revealTotal);
       return;
     }
     let revealed = 0;
     revealTimer = setInterval(() => {
       revealed += 1;
-      resultElement.textContent = maskedReveal(encrypted, revealed);
+      resultElement.textContent = maskedReveal(encrypted, revealed, revealTotal);
       if (revealed >= revealTotal) clearInterval(revealTimer);
     }, 420);
   }
