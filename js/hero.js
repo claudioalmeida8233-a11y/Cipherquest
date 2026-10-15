@@ -6,10 +6,15 @@ const EXAMPLES = [
   { original: 'CASA', shift: 2 },
   { original: 'CODIGO', shift: -1 }
 ];
-const MAX_REVEALED_LETTERS = 3;
+function revealLimit(text) {
+  const letters = [...text].filter(letter => letter !== ' ').length;
+  if (letters <= 4) return 1;
+  if (letters <= 6) return 3;
+  return Math.max(3, Math.ceil(letters / 2));
+}
 
 export function maskedReveal(text, revealedCount) {
-  let remaining = Math.min(MAX_REVEALED_LETTERS, Math.max(0, Math.floor(revealedCount)));
+  let remaining = Math.min(revealLimit(text), Math.max(0, Math.floor(revealedCount)));
   return [...text].map(letter => {
     if (letter === ' ') return ' ';
     if (remaining > 0) { remaining -= 1; return letter; }
@@ -34,17 +39,18 @@ export function startHeroAnimation() {
     shiftElement.textContent = shift < 0 ? 'REVERSO −1' : `DESLOCAMENTO +${shift}`;
     transmissionElement.textContent = `TRANSMISSÃO / ${String(index + 1).padStart(3, '0')}`;
     mappingElement.textContent = `${original[0]} → ${encrypted[0]}   ${original[1]} → ${encrypted[1]}`;
+    const revealTotal = revealLimit(encrypted);
     resultElement.textContent = maskedReveal(encrypted, 0);
     clearInterval(revealTimer);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      resultElement.textContent = maskedReveal(encrypted, MAX_REVEALED_LETTERS);
+      resultElement.textContent = maskedReveal(encrypted, revealTotal);
       return;
     }
     let revealed = 0;
     revealTimer = setInterval(() => {
       revealed += 1;
       resultElement.textContent = maskedReveal(encrypted, revealed);
-      if (revealed >= MAX_REVEALED_LETTERS) clearInterval(revealTimer);
+      if (revealed >= revealTotal) clearInterval(revealTimer);
     }, 420);
   }
 
